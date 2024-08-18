@@ -1,0 +1,8 @@
+{
+  "imports": {
+    "@oak/oak": "jsr:@oak/oak@^16.1.0"
+  },
+  "tasks": {
+    "start": "deno run --allow-net main.ts"
+  }
+}
