@@ -1,0 +1,6 @@
+
+@baseUrl=http://localhost:8000
+###
+GET {{baseUrl}}/pokemon
+###
+GET {{baseUrl}}/pokemon/1

@@ -1,8 +1,12 @@
 {
+  "deno": "1.46.2",
   "imports": {
-    "@oak/oak": "jsr:@oak/oak@^16.1.0"
+    "@oak/oak": "jsr:@oak/oak@^16.1.0",
+    "@std/fmt": "jsr:@std/fmt@^1.0.1",
+    "@zod/zod": "https://deno.land/x/zod@v3.23.8/mod.ts",
+    "mongoose": "npm:mongoose@^8.6.0"
   },
   "tasks": {
-    "start": "deno run --allow-net main.ts"
+    "start": "deno -NESR --watch main.ts"
   }
 }
