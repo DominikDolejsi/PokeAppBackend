@@ -1,0 +1,27 @@
+name: Run tests
+
+on:
+  [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container:
+      image: denoland/deno:1.46.2
+      ports:
+        - 8000
+
+    steps:
+      - name: Setup repo
+      - uses: actions/checkout@v4
+
+      - name: Setup Deno
+      - uses: actions/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Formating
+        run: deno fmt --check
+
+      - name: Linting
+        run: deno lint
