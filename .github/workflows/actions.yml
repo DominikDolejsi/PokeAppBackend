@@ -15,11 +15,6 @@ jobs:
       - name: Setup repo
         uses: actions/checkout@v4
 
-      - name: Setup Deno
-        uses: actions/setup-deno@v1
-        with:
-          deno-version: v1.x
-
       - name: Formating
         run: deno fmt --check
 
