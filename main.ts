@@ -2,6 +2,7 @@ import { Application } from "@oak/oak";
 import router from "./api/v1/router.ts";
 import { logger } from "./middleware/logger.ts";
 import mongoose from "mongoose";
+import { oakCors } from "https://deno.land/x/cors@v1.2.2/mod.ts";
 
 const app = new Application();
 
@@ -29,7 +30,7 @@ app.addEventListener("listen", ({ hostname, port, secure }) => {
 });
 
 app.use(logger);
-
+app.use(oakCors());
 app.use(router.routes());
 app.use(router.allowedMethods());
 
