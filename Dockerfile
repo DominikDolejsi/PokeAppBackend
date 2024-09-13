@@ -1,13 +1,15 @@
-FROM denoland/deno:1.46.2
+FROM denoland/deno:1.46.2 AS builder
 
-EXPOSE 8000
-
-WORKDIR /AppBackend
-
-USER deno
+WORKDIR /app
 
 COPY . .
 
-RUN deno cache main.ts
+RUN deno task compile
 
-CMD ["deno", "task", "start"]
+FROM debian:bullseye-slim
+
+COPY --from=builder /app/server .
+
+EXPOSE 8000
+
+CMD [ "./server" ]

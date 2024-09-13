@@ -5,12 +5,17 @@ import mongoose from "mongoose";
 
 const app = new Application();
 
-await mongoose.connect(
-  Deno.env.get("DATABASE_URL") ?? "mongodb://localhost:27017",
-);
+const databaseUrl = Deno.env.get("DATABASE_URL");
+
+console.log(databaseUrl);
+
+if (databaseUrl) {
+  await mongoose.connect(
+    Deno.env.get("DATABASE_URL")!,
+  );
+}
 
 app.addEventListener("listen", ({ hostname, port, secure }) => {
-  console.log(`This is a env variable ${Deno.env.get("DATABASE_URL")}`);
   console.log(
     `Connection to database ${
       mongoose.connection.readyState === 1 ? "succesfull" : "unsuccesfull"

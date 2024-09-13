@@ -7,6 +7,11 @@
     "mongoose": "npm:mongoose@^8.6.0"
   },
   "tasks": {
-    "start": "deno -NESR --watch main.ts"
+    "dev": "deno -NESR --watch --env main.ts",
+    "start": "deno -NESR main.ts",
+    "compile": "deno compile -NESR --target x86_64-unknown-linux-gnu --output server main.ts",
+    "code:check": "deno fmt --check && deno lint && deno check *.ts",
+    "hooks:install": "deno run --allow-read=deno.json,.git/hooks/ --allow-write=.git/hooks/ jsr:@hongminhee/deno-task-hooks",
+    "hooks:pre-commit": "deno task code:check"
   }
 }

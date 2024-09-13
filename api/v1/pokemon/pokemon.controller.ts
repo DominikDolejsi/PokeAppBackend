@@ -16,7 +16,7 @@ export const getAllController: RouterMiddleware<"/"> = async (
     const pokemon = await getAllPokemon();
 
     ctx.response.type = "json";
-    ctx.response.body = JSON.stringify(pokemon);
+    ctx.response.body = pokemon;
   } catch (_error: unknown) {
     //then error handling ???
   }
