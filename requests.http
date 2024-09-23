@@ -3,4 +3,15 @@
 ###
 GET {{baseUrl}}/pokemon
 ###
-GET {{baseUrl}}/pokemon/1
+GET {{baseUrl}}/pokemon/66d7537b7dac317e68266c20
+###
+POST {{baseUrl}}/pokemon
+
+[
+    {
+    "name": "hello",
+    "artwork": "placeholder"
+    }
+]
+###
+DELETE {{baseUrl}}/pokemon/66ef1a2701d28d7b9c3861f9

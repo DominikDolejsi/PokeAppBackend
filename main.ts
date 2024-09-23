@@ -8,8 +8,6 @@ const app = new Application();
 
 const databaseUrl = Deno.env.get("DATABASE_URL");
 
-console.log(databaseUrl);
-
 if (databaseUrl) {
   await mongoose.connect(
     Deno.env.get("DATABASE_URL")!,
