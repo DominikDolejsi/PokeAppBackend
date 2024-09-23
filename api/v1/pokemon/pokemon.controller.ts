@@ -122,7 +122,7 @@ export const deleteOneController: RouterMiddleware<"/:pokemonId"> = async (
 
     ctx.response.type = "json";
     ctx.response.body = pokemon;
-  } catch (_error: unknown) {
+  } catch (error: unknown) {
     ctx.response.type = "json";
     if (error instanceof Error) {
       ctx.response.body = { errorMessage: error.message };
