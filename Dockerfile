@@ -4,8 +4,6 @@ WORKDIR /app
 
 COPY . .
 
-RUN deno task seed
-
 RUN deno task compile
 
 FROM debian:bullseye-slim
