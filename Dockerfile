@@ -1,8 +1,10 @@
-FROM denoland/deno:1.46.2 AS builder
+FROM denoland/deno:2.0.4 AS builder
 
 WORKDIR /app
 
 COPY . .
+
+RUN deno task seed
 
 RUN deno task compile
 

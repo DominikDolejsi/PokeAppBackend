@@ -28,7 +28,9 @@ app.addEventListener("listen", ({ hostname, port, secure }) => {
 });
 
 app.use(logger);
-app.use(oakCors());
+app.use(oakCors({
+  origin: "https://pokeappfrontend-dev.up.railway.app",
+}));
 app.use(router.routes());
 app.use(router.allowedMethods());
 
