@@ -4,7 +4,7 @@ import file from "./pokemon.json" with { type: "json" };
 
 const seedDB = async () => {
     const currentDB = await PokemonModel.find();
-    if (!currentDB) {
+    if (currentDB) {
         console.log("Found some documents in DB");
         PokemonModel.deleteMany();
         console.log("Cleard DB");
