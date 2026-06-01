@@ -1,4 +1,4 @@
-import { AnyZodObject, z } from "@zod/zod";
+import { z, ZodObject } from "@zod/zod";
 
 type JSONValue = string | number | boolean | null | JSONValue[] | {
   [key: string]: JSONValue;
@@ -11,7 +11,7 @@ export type ParseableData = {
   body?: Record<string, JSONObject>;
 };
 
-export const zParse = async <T extends AnyZodObject>(
+export const zParse = async <T extends ZodObject>(
   schema: T,
   { params, searchParams, body }: ParseableData,
 ): Promise<z.infer<T>> => {

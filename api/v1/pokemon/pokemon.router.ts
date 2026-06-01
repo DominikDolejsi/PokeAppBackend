@@ -12,7 +12,8 @@ const pokemonRouter = new Router({
   prefix: "/pokemon",
 });
 
-pokemonRouter.get("/", getAllController)
+pokemonRouter
+  .get("/", getAllController)
   .get("/:pokemonId", getOneController)
   .post("/", createManyController)
   // .patch("/:pokemonId", updateOneController)

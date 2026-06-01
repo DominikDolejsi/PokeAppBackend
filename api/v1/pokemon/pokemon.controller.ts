@@ -1,19 +1,18 @@
 import { RouterMiddleware } from "@oak/oak";
+import { STATUS_CODE } from "@oak/commons/status";
 import {
   createManyPokemon,
-  deletOnePokemon,
-  getAllPokemon,
-  getOnePokemon,
+  createPokemon,
+  getManyPokemon,
 } from "./pokemon.service.ts";
 import { zParse } from "../../../utils/zParse.ts";
 import {
   createManySchema,
+  createPokemonSchema,
   deleteOneSchema,
   getOneSchema,
   universalSchema,
 } from "../../../zod-schemas/requestSchema.ts";
-import { isInvalidOrEmptyJSONBodyError } from "../../../utils/typeGuards.ts";
-import { STATUS_CODE } from "jsr:@oak/commons@0.11/status";
 import { ZodObject } from "@zod/zod";
 
 export const getAllController: RouterMiddleware<"/"> = async (
@@ -29,16 +28,16 @@ export const getAllController: RouterMiddleware<"/"> = async (
     // send response
     const searchParams = Object.fromEntries(ctx.request.url.searchParams); // gotta parse it
 
-    const pokemon = await getAllPokemon();
+    const pokemon = await getManyPokemon();
 
-    ctx.response.type = "json";
     ctx.response.body = pokemon;
-  } catch (error: unknown) {
-    ctx.response.type = "json";
+  } catch (error) {
     if (error instanceof Error) {
       ctx.response.body = { errorMessage: error.message };
     }
     ctx.response.body = { errorMessage: "unknown error" };
+  } finally {
+    ctx.response.type = "json";
   }
 };
 
@@ -84,6 +83,8 @@ export const createManyController: RouterMiddleware<"/"> = async (
     ctx.response.type = "json";
     ctx.response.body = pokemon;
   } catch (error: unknown) {
+    console.log("Error", error);
+
     ctx.response.status = STATUS_CODE.BadRequest;
     if (isInvalidOrEmptyJSONBodyError(error)) {
       ctx.response.type = "json";
@@ -124,6 +125,7 @@ export const deleteOneController: RouterMiddleware<"/:pokemonId"> = async (
     ctx.response.body = pokemon;
   } catch (error: unknown) {
     ctx.response.type = "json";
+    console.log("Error", error);
     if (error instanceof Error) {
       ctx.response.body = { errorMessage: error.message };
     }
