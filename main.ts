@@ -11,10 +11,7 @@ const databaseUrl = Deno.env.get("DATABASE_URL");
 const serverPort = Number(Deno.env.get("PORT"));
 const allowedOrigins = Deno.env.get("CORS");
 
-console.log(Deno.env.get("DATABASE_URL"));
-console.log(Deno.env.get("PORT"));
-console.log(typeof serverPort);
-console.log(serverPort);
+console.log(databaseUrl);
 if (databaseUrl) {
   await mongoose.connect(databaseUrl);
 }
