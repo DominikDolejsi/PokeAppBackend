@@ -46,7 +46,7 @@ const pokemonSchema = new Schema<PokemonDB>({
   generation: { type: Number, required: true, min: 1 },
   type: { type: [String], required: true },
   flavor_text: { type: [String], required: true },
-  next_evolution: { type: [Types.ObjectId], default: null },
+  next_evolution: { type: [Types.ObjectId], default: null, ref: "Pokemon" },
   artwork: { type: String, required: true },
   home_sprite: { type: String, default: null },
   home_sprite_shiny: { type: String, default: null },

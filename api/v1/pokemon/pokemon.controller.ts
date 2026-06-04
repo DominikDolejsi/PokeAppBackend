@@ -1,172 +1,136 @@
 import { RouterMiddleware } from "@oak/oak";
-import { STATUS_CODE } from "@oak/commons/status";
 import {
   createManyPokemon,
-  createPokemon,
+  deleteManyPokemon,
+  deletePokemon,
   getManyPokemon,
+  getPokemon,
+  updatePokemon,
 } from "./pokemon.service.ts";
 import { zParse } from "../../../utils/zParse.ts";
 import {
-  createManySchema,
-  createPokemonSchema,
+  createManyPokemonSchema,
+  deleteManyPokemonSchema,
   deleteOneSchema,
+  getManyPokemonSchema,
   getOneSchema,
   universalSchema,
+  updatePokemonSchema,
 } from "../../../zod-schemas/requestSchema.ts";
-import { ZodObject } from "@zod/zod";
+import { NotFoundError } from "../../../types/error.types.ts";
 
 export const getAllController: RouterMiddleware<"/"> = async (
   ctx,
   _next,
 ) => {
-  try {
-    // get data
-    // parse data
-    // call service
-    // send response
-    // handle errors
-    // send response
-    const searchParams = Object.fromEntries(ctx.request.url.searchParams); // gotta parse it
+  const { searchParams } = await zParse(getManyPokemonSchema, {
+    searchParams: Object.fromEntries(ctx.request.url.searchParams),
+  });
 
-    const pokemon = await getManyPokemon();
+  const pokemon = await getManyPokemon(searchParams);
 
-    ctx.response.body = pokemon;
-  } catch (error) {
-    if (error instanceof Error) {
-      ctx.response.body = { errorMessage: error.message };
-    }
-    ctx.response.body = { errorMessage: "unknown error" };
-  } finally {
-    ctx.response.type = "json";
-  }
+  if (pokemon.length === 0) throw new NotFoundError("Pokemon not found");
+
+  ctx.response.type = "json";
+  ctx.response.body = pokemon;
 };
 
 export const getOneController: RouterMiddleware<"/:pokemonId"> = async (
   ctx,
   _next,
 ) => {
-  try {
-    // get data
-    // parse data
-    // call service
-    // send response
-    // handle errors
-    // send response
-    const searchParams = Object.fromEntries(ctx.request.url.searchParams); // gotta parse it
+  const { params, searchParams } = await zParse(getOneSchema, {
+    params: ctx.params,
+    searchParams: Object.fromEntries(ctx.request.url.searchParams),
+  });
 
-    const { params } = await zParse(getOneSchema, { params: ctx.params });
+  const pokemon = await getPokemon(params.pokemonId, searchParams.populate);
 
-    const pokemon = await getOnePokemon(params?.pokemonId);
+  if (!pokemon) throw new NotFoundError("Pokemon not found");
 
-    ctx.response.type = "json";
-    ctx.response.body = pokemon;
-  } catch (error: unknown) {
-    ctx.response.type = "json";
-    if (error instanceof Error) {
-      ctx.response.body = { errorMessage: error.message };
-    }
-    ctx.response.body = { errorMessage: "unknown error" };
-  }
+  ctx.response.type = "json";
+  ctx.response.body = pokemon;
 };
 
 export const createManyController: RouterMiddleware<"/"> = async (
   ctx,
   _next,
 ) => {
-  try {
-    const requestBody = await ctx.request.body.json(); // parse it¨
+  const requestBody = await ctx.request.body.json(); // parse it
 
-    const { body } = await zParse(createManySchema, { body: requestBody });
+  const { body } = await zParse(createManyPokemonSchema, { body: requestBody });
 
-    const pokemon = await createManyPokemon(body);
+  const pokemon = await createManyPokemon(body);
 
-    ctx.response.type = "json";
-    ctx.response.body = pokemon;
-  } catch (error: unknown) {
-    console.log("Error", error);
-
-    ctx.response.status = STATUS_CODE.BadRequest;
-    if (isInvalidOrEmptyJSONBodyError(error)) {
-      ctx.response.type = "json";
-      ctx.response.body = { errorMessage: "Invalid or Empty body" };
-    }
-    ctx.response.body = { errorMessage: "unknown error" };
-  }
+  ctx.response.type = "json";
+  ctx.response.body = pokemon;
 };
 
 export const updateOneController: RouterMiddleware<"/:pokemonId"> = async (
   ctx,
   _next,
 ) => {
-  try {
-    const pokemon = await getAllPokemon();
+  const requestBody = await ctx.request.body.json(); // parse it
 
-    ctx.response.type = "json";
-    ctx.response.body = pokemon;
-  } catch (_error: unknown) {
-    //then error handling ???
-  }
+  const { params, body } = await zParse(updatePokemonSchema, {
+    params: ctx.params,
+    body: requestBody,
+  });
+
+  const pokemon = await updatePokemon(params.pokemonId, body);
+
+  ctx.response.type = "json";
+  ctx.response.body = pokemon;
 };
 
 export const deleteOneController: RouterMiddleware<"/:pokemonId"> = async (
   ctx,
   _next,
 ) => {
-  try {
-    const RequestSearchParams = Object.fromEntries(
-      ctx.request.url.searchParams,
-    );
+  // const RequestSearchParams = Object.fromEntries(
+  //   ctx.request.url.searchParams,
+  // );
 
-    const { params } = await zParse(deleteOneSchema, { params: ctx.params });
+  const { params } = await zParse(deleteOneSchema, { params: ctx.params });
 
-    const pokemon = await deletOnePokemon(params?.pokemonId);
+  const pokemon = await deletePokemon(params.pokemonId);
 
-    ctx.response.type = "json";
-    ctx.response.body = pokemon;
-  } catch (error: unknown) {
-    ctx.response.type = "json";
-    console.log("Error", error);
-    if (error instanceof Error) {
-      ctx.response.body = { errorMessage: error.message };
-    }
-    ctx.response.body = { errorMessage: "unknown error" };
-  }
+  ctx.response.type = "json";
+  ctx.response.body = pokemon;
 };
 
-export const deleteManyController: RouterMiddleware<"/:pokemonId"> = async (
+export const deleteManyController: RouterMiddleware<"/"> = async (
   ctx,
   _next,
 ) => {
-  try {
-    const pokemon = await getAllPokemon();
+  const requestBody = await ctx.request.body.json();
 
-    ctx.response.type = "json";
-    ctx.response.body = pokemon;
-  } catch (_error: unknown) {
-    //then error handling ???
-  }
+  const { body } = await zParse(deleteManyPokemonSchema, {
+    body: requestBody,
+  });
+
+  const pokemon = await deleteManyPokemon(body.pokemonIds);
+
+  ctx.response.type = "json";
+  ctx.response.body = pokemon;
 };
 
 export const universalController: RouterMiddleware<"/item"> = async (
   ctx,
   _next,
 ) => {
-  try {
-    const requestBody = await ctx.request.body.json();
+  const requestBody = await ctx.request.body.json();
 
-    const { body } = await zParse(universalSchema, {
-      body: requestBody,
-    });
+  const { body } = await zParse(universalSchema, {
+    body: requestBody,
+  });
 
-    console.log(body);
-    ctx.response.body = { status: "successfuly parsed" };
+  console.log(body);
+  ctx.response.body = { status: "successfuly parsed" };
 
-    console.log("searchParams");
-    console.log(Object.fromEntries(ctx.request.url.searchParams));
-    console.log("params");
-    console.log(ctx.params);
-    ctx.request.hasBody;
-  } catch (error: unknown) {
-    console.log(error);
-  }
+  console.log("searchParams");
+  console.log(Object.fromEntries(ctx.request.url.searchParams));
+  console.log("params");
+  console.log(ctx.params);
+  ctx.request.hasBody;
 };

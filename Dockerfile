@@ -1,4 +1,4 @@
-FROM denoland/deno:2.0.4 AS builder
+FROM denoland/deno:2.8.1 AS builder
 
 WORKDIR /app
 

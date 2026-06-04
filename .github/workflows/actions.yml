@@ -23,3 +23,6 @@ jobs:
 
       - name: Linting
         run: deno lint
+
+      - name: Audit
+        run: deno audit

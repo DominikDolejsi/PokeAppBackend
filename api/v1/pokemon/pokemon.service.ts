@@ -1,24 +1,27 @@
+import { getManySearchParams } from "../../../zod-schemas/requestSchema.ts";
 import { Pokemon, PokemonDB, PokemonModel } from "./pokemon.model.ts";
 import { DeleteResult, UpdateWriteOpResult } from "mongoose";
 
-export const getManyPokemon = async (): Promise<PokemonDB[]> => {
-  const pokemon = await PokemonModel.find({
-    name: { $in: [] },
-    index: { $in: [] },
-    type: { $in: [] },
-    category: { $in: [] },
-    gender: { $in: [] },
-    generation: { $in: [] },
-    form: { $in: [] },
-  });
+export const getManyPokemon = async (
+  { limit, skip, sort, select, populate }: getManySearchParams,
+): Promise<PokemonDB[]> => {
+  const pokemon = await PokemonModel.find().skip(skip).limit(limit).sort(sort)
+    .select(select).populate({
+      path: populate ? "next_evolution" : "index",
+      populate: { path: populate ? "next_evolution" : "index" },
+    });
 
   return pokemon;
 };
 
 export const getPokemon = async (
   pokemonId: string,
+  populate: boolean,
 ): Promise<PokemonDB | null> => {
-  const pokemon = await PokemonModel.findOne({ _id: pokemonId });
+  const pokemon = await PokemonModel.findOne({ _id: pokemonId }).populate({
+    path: populate ? "next_evolution" : "index",
+    populate: { path: populate ? "next_evolution" : "index" },
+  });
 
   return pokemon;
 };

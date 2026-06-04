@@ -16,8 +16,8 @@ pokemonRouter
   .get("/", getAllController)
   .get("/:pokemonId", getOneController)
   .post("/", createManyController)
-  // .patch("/:pokemonId", updateOneController)
-  // .delete("/", deleteManyController);
+  .patch("/:pokemonId", updateOneController)
+  .delete("/", deleteManyController)
   .delete("/:pokemonId", deleteOneController);
 
 export default pokemonRouter;
