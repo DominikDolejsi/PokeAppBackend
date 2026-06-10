@@ -11,9 +11,30 @@ const databaseUrl = Deno.env.get("DATABASE_URL");
 const serverPort = Number(Deno.env.get("PORT"));
 const allowedOrigins = Deno.env.get("CORS");
 
-console.log(databaseUrl);
+console.log("Started the server");
+console.log("databaseUrl :", databaseUrl);
+console.log("databaseUrl json:", JSON.stringify(databaseUrl));
+
 if (databaseUrl) {
-  await mongoose.connect(databaseUrl);
+  try {
+    const url = new URL(databaseUrl);
+
+    console.log("URL again :");
+    console.log({
+      protocol: url.protocol,
+      username: url.username,
+      host: url.host,
+      database: url.pathname,
+      authSource: url.searchParams.get("authSource"),
+    });
+    await mongoose.connect(databaseUrl);
+  } catch (error) {
+    console.error(error);
+
+    console.dir(error, { depth: null });
+
+    Deno.exit(1);
+  }
 }
 
 app.addEventListener("listen", ({ hostname, port, secure }) => {
