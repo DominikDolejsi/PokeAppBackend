@@ -1,9 +1,13 @@
-FROM denoland/deno:2.8.1 AS builder
+FROM denoland/deno:2.9.3 AS builder
+
+EXPOSE 8000
 
 WORKDIR /app
 
+USER deno
+
 COPY . .
 
-EXPOSE 8000
+RUN deno cache main.ts
 
 CMD ["deno", "task", "start"]

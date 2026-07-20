@@ -10,7 +10,7 @@
   },
   "tasks": {
     "dev": "deno -NE --allow-read=/.dockerenv --allow-sys=osRelease --watch --env main.ts",
-    "start": "deno --allow-read --allow-sys --allow-net --allow-env main.ts",
+    "start": "deno -NESR main.ts",
     "compile": "deno compile -NESR --target x86_64-unknown-linux-gnu --output server main.ts",
     "code:check": "deno fmt --check && deno lint && deno check *.ts && deno audit",
     "hooks:install": "deno run --allow-read=deno.json,.git/hooks/ --allow-write=.git/hooks/ jsr:@hongminhee/deno-task-hooks",
