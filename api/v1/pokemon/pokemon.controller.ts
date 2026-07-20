@@ -29,8 +29,6 @@ export const getAllController: RouterMiddleware<"/"> = async (
 
   const pokemon = await getManyPokemon(searchParams);
 
-  if (pokemon.length === 0) throw new NotFoundError("Pokemon not found");
-
   ctx.response.type = "json";
   ctx.response.body = pokemon;
 };
