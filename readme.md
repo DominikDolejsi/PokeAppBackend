@@ -1,6 +1,8 @@
 # PokeApp Backend ⚙️
 
-The backend service for the Pokémon App. It exposes a REST API used by the frontend and is responsible for authentication, user management, collection management, and serving Pokémon data from the database.
+The backend service for the Pokémon App. It exposes a REST API used by the
+frontend and is responsible for authentication, user management, collection
+management, and serving Pokémon data from the database.
 
 ## Project Architecture
 

@@ -6,7 +6,7 @@ pre-commit:
       glob: "*.ts"
 
     - name: fmt
-      run: deno fmt --check {staged_files}
+      run: deno fmt {staged_files}
       glob: "*.{ts,md,yaml,json}"
 
     - name: typecheck
