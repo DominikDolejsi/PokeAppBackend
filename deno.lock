@@ -17,7 +17,7 @@
     "jsr:@std/path@1": "1.1.4",
     "jsr:@zod/zod@^4.4.3": "4.4.3",
     "npm:@types/node@*": "18.16.19",
-    "npm:lefthook@2.1.10": "2.1.10",
+    "npm:lefthook@^2.1.10": "2.1.10",
     "npm:mongoose@^9.6.3": "9.6.3",
     "npm:path-to-regexp@^6.3.0": "6.3.0"
   },
@@ -279,7 +279,7 @@
       "jsr:@oak/oak@^17.2.0",
       "jsr:@std/fmt@^1.0.10",
       "jsr:@zod/zod@^4.4.3",
-      "npm:lefthook@2.1.10",
+      "npm:lefthook@^2.1.10",
       "npm:mongoose@^9.6.3"
     ]
   }

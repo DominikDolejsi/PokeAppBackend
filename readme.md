@@ -21,6 +21,8 @@ git clone
 cd appBackend
 
 deno install
+
+deno task configure (for Lefthook)
 ```
 
 ## Usage
