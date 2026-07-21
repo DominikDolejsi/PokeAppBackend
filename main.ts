@@ -17,22 +17,9 @@ console.log("databaseUrl json:", JSON.stringify(databaseUrl));
 
 if (databaseUrl) {
   try {
-    const url = new URL(databaseUrl);
-
-    console.log("URL again :");
-    console.log({
-      protocol: url.protocol,
-      username: url.username,
-      host: url.host,
-      database: url.pathname,
-      authSource: url.searchParams.get("authSource"),
-    });
     await mongoose.connect(databaseUrl);
   } catch (error) {
     console.error(error);
-
-    console.dir(error, { depth: null });
-
     Deno.exit(1);
   }
 }

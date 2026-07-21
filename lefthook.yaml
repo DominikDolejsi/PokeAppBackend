@@ -1,0 +1,19 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - name: lint
+      run: deno lint {staged_files}
+      glob: "*.ts"
+
+    - name: fmt
+      run: deno fmt --check {staged_files}
+      glob: "*.{ts,md,yaml,json}"
+
+    - name: typecheck
+      run: deno check {staged_files}
+      glob: "*.{ts}"
+pre-push:
+  parallel: true
+  jobs:
+    - name: audit
+      run: deno audit
