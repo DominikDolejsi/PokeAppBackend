@@ -15,5 +15,6 @@
     "compile": "deno compile -NESR --target x86_64-unknown-linux-gnu --output server main.ts",
     "code:check": "deno fmt --check && deno lint && deno check *.ts && deno audit",
     "configure": "lefthook install"
-  }
+  },
+  "nodeModulesDir": "auto"
 }
