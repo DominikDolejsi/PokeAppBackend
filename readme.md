@@ -7,8 +7,8 @@ repositories. The project follows a clear separation of responsibilities, where
 each repository focuses on a single concern.
 
 - [Frontend 💅](https://github.com/DominikDolejsi/PokeAppFrontend)
-- [Backend ⚙️](https://github.com/DominikDolejsi/PokeAppBackend)
-- **Crawdaunt** <- you are here
+- **Backend ⚙️** <- you are here
+- [Crawdaunt 🦞](https://github.com/DominikDolejsi/PokeAppCrawdaunt)
 - [Images 🖼️](https://github.com/DominikDolejsi/PokeAppImages)
 
 ## Instalation
