@@ -15,6 +15,7 @@
     "jsr:@std/internal@^1.0.12": "1.0.14",
     "jsr:@std/media-types@1": "1.1.0",
     "jsr:@std/path@1": "1.1.4",
+    "jsr:@tajpouria/cors@^1.2.1": "1.2.1",
     "jsr:@zod/zod@^4.4.3": "4.4.3",
     "npm:@types/node@*": "18.16.19",
     "npm:lefthook@^2.1.10": "2.1.10",
@@ -80,6 +81,9 @@
       "dependencies": [
         "jsr:@std/internal"
       ]
+    },
+    "@tajpouria/cors@1.2.1": {
+      "integrity": "eca42e4fb7cb3906ef0ee3d1e565dd6bb4632ccd8e70a95cf4279759743328f0"
     },
     "@zod/zod@4.4.3": {
       "integrity": "4712ac0967efaa718b37c36eaffb4e1d4457e1a266aef6efb3ab36f54a6fefe4"
@@ -278,6 +282,7 @@
       "jsr:@oak/commons@^1.0.1",
       "jsr:@oak/oak@^17.2.0",
       "jsr:@std/fmt@^1.0.10",
+      "jsr:@tajpouria/cors@^1.2.1",
       "jsr:@zod/zod@^4.4.3",
       "npm:lefthook@^2.1.10",
       "npm:mongoose@^9.6.3"
