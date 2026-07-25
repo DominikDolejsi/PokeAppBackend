@@ -7,7 +7,7 @@
     "@tajpouria/cors": "jsr:@tajpouria/cors@^1.2.1",
     "@zod/zod": "jsr:@zod/zod@^4.4.3",
     "lefthook": "npm:lefthook@^2.1.10",
-    "mongoose": "npm:mongoose@^9.6.3"
+    "mongoose": "npm:mongoose@^9.8.0"
   },
   "tasks": {
     "dev": "deno -NE --allow-read=/.dockerenv --allow-sys=osRelease --watch --env main.ts",
